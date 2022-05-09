@@ -1,0 +1,15 @@
+body{
+    background-color: #ffffff;
+}
+
+::selection{
+    background: #d698ffbd;
+    color: #ffffff;
+}
+.index-page{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}

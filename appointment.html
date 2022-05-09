@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>MedRush</title>
+</head>
+<body style="font-family: 'Raleway', sans-serif; padding: 10%;">
+    <h2 style="text-align: center; padding-top: 20px;"><b>Request for Appointment</b></h2>
+    <p style="text-align: center; padding-bottom: 30px; padding-top: 5px;"><b>Please note that you can book an appointment with doctor/s that are appointed to you</b></p>
+    <div class="container" style="padding-bottom: 20px;">
+    <div class="row">
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4">
+    <div id="user-id" style="padding-left:30px;"></div>
+    <div id="currentAppointment" style="padding-left:30px;"></div>
+    <div id="requestedAppointment" style="padding-left:30px;"></div>
+    <div id="doctorId" style="padding-left:30px;"></div>
+    <form id="myForm" style="padding: 20px;">
+          <div class="form-group">
+            <label for="time"><b>Time of Appointment</label>
+            <input type="text" class="form-control" id="time" placeholder="Example- 7:00PM" autocomplete="off" required>
+          </div><br>
+          <div class="form-group">
+            <label for="date"><b>Date of Appointment</label>
+            <input type="date" class="form-control" id="date" autocomplete="off" required>
+          </div><br>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="comment"><b>Comments</b></label>
+              <input type="email" class="form-control" id="comment" placeholder="Example- Fever, Headache" autocomplete="off" required>
+            </div><br>
+        <span style="padding-left: 40%;">
+          <button id="submit" style="text-align: center; background-color: aquamarine; padding: 2px 10px; border-width: 0px;">
+            Submit
+          </button>
+       </span>
+      </form>
+     </div>
+   </div>
+<script src="assets/js/index.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="assets/jquery/jquery.min.js"></script>
+<script type="module" async>
+  const patientId = localStorage.getItem('patientId');
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-analytics.js";
+  import { getFirestore } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    const firebaseConfig = callFirebase()
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getFirestore();
+    import { collection, addDoc, setDoc, getDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+    const docRef = await getDoc(doc(db, "Patients", patientId).withConverter(patientConverter));
+    if (docRef.exists()){
+      const patient = new Patient(docRef.data());
+    } else {
+      alert("Some error occured! Please login again to access this page!");
+      window.location.href = "index.html";
+    }
+    document.getElementById("user-id").innerHTML = "Patient ID: " + patientId;
+    document.getElementById("currentAppointment").innerHTML = "Current Appointment: none";
+    document.getElementById("requestedAppointment").innerHTML = "Requested Appointment: none";
+    document.getElementById("doctorId").innerHTML = "Doctor ID: assignedDoctorId";
+    document.getElementById("submit").addEventListener("click", function(){alert("This feature will be available soon! Sorry for the inconvinience!")});
+</script>
+</body>
+</html>
